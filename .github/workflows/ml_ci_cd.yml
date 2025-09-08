@@ -25,7 +25,15 @@ jobs:
     - name: download dataset
       run: wget -O data/heart-disease.csv ${{github.event.client_payload.dataseturl}}
     - name: cat dataset
-      run: cat data/heart-disease.csv  
+      run: cat data/heart-disease.csv
+    - name: Mostrar cantidad de filas y columnas del dataset
+      run: |
+        python -c "
+        import pandas as pd
+        df = pd.read_csv('data/heart-disease.csv')
+        print(f'Filas: {df.shape[0]}')
+        print(f'Columnas: {df.shape[1]}')
+        "
     - name: train model
       run: python model/train.py
     - name: Show payload
